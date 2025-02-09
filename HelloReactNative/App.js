@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function App() {
 
@@ -13,7 +13,9 @@ export default function App() {
   function addGoalHandler() {
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
-       enteredGoalText
+      // This key genreator is not good for production code, but it's fine for this example.
+      // It is possible to have duplicates.
+      {text: enteredGoalText, key: Math.random().toString()},
     ]);
     console.log("Goals Added: " + enteredGoalText);
   }
@@ -29,13 +31,24 @@ export default function App() {
         <Button onPress={addGoalHandler} title='Add Goal' />
       </View>
       <View style={styles.goalsContainer}>
-        <ScrollView>
-          {courseGoals.map((goal) => 
-            <View key={goal} style={styles.goalItem}>
-              <Text style={styles.goalText}>{goal}</Text>
+        
+        {/* A flatlist is a list that only renders the items that are currently visible on the 
+        screen. The rest are lazy-loaded based on how clos you are in the scroll view
+        */}
+        
+        <FlatList 
+        data={courseGoals}
+        renderItem={itemData => {
+          return (
+            <View style={styles.goalItem}>
+              <Text style={styles.goalText}>{itemData.item.text}</Text>
             </View>
-          )}
-        </ScrollView>
+          );
+        }}
+        keyExtractor={(item, index) => {
+          return item.key;
+        }} 
+        alwaysBounceVertical={false}/>
       </View>
     </View>
   );
