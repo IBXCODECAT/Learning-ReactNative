@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Modal, StyleSheet, TextInput, View } from 'react-native';
+import { Button, Image, Modal, StyleSheet, TextInput, View } from 'react-native';
 
 function GoalInput(props) {
     
@@ -17,6 +17,9 @@ function GoalInput(props) {
     return (
         <Modal visible={props.visible} animationType='slide'>
             <View style={styles.inputContainer}>
+                <Image 
+                    style={styles.image} 
+                    source={require('./../assets/images/goal.png')}/>
                 <TextInput 
                     onChangeText={goalInputHandler}
                     placeholder='your goal' 
@@ -25,10 +28,16 @@ function GoalInput(props) {
                     />
                 <View style={styles.modalButtonContainer}>
                     <View style={styles.buttonContainerView}>
-                        <Button title="Add Goal" onPress={addGoalHandler} />
+                        <Button 
+                        title='Cancel' 
+                        color={'#f31282'}
+                        onPress={props.onCancel} />
                     </View>
                     <View style={styles.buttonContainerView}>
-                        <Button title='Cancel' onPress={props.onCancel} />
+                        <Button 
+                        title="Add Goal" 
+                        color='#5e0acc'
+                        onPress={addGoalHandler} />
                     </View>
                 </View>
             </View>
@@ -39,20 +48,27 @@ function GoalInput(props) {
 export default GoalInput;
 
 const styles = StyleSheet.create({
+    
     inputContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 24,
         padding: 16,
-        borderBottomWidth: 1,
-        borderBottomColor: '#cccccc',
+        backgroundColor: '#311b6b',
     },
-        textInput: {
+    image: {
+        width: 100,
+        height: 100,
+        margin: 20,
+    },
+    textInput: {
         borderWidth: 1,
-        borderColor: '#cccccc',
+        borderColor: '#e4d0ff',
+        backgroundColor: '#e4d0ff',
+        color: '#120438',
+        borderRadius: 6,
         width: '100%',
-        padding: 8,
+        padding: 16,
     },
     modalButtonContainer: {
         marginTop: 16,
@@ -61,5 +77,5 @@ const styles = StyleSheet.create({
     buttonContainerView: {
         width: 100,
         marginHorizontal: 16,
-    }
+    },
 });
