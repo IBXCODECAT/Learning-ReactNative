@@ -1,12 +1,21 @@
 import { useState } from 'react';
-import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import GoalItem from './components/GoalItem';
 import GoalInput from './components/GoalInput';
 
 export default function App() {
 
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [courseGoals, setCourseGoals] = useState([]);
+
+  function startAddGoalHandlerViaModal() {
+    setModalIsVisible(true);
+  }
+
+  function endAddGoalHandlerViaModal() {
+    setModalIsVisible(false);
+  }
 
   function addGoalHandler(enteredGoalText) {
     setCourseGoals((currentCourseGoals) => [
@@ -15,6 +24,10 @@ export default function App() {
       // It is possible to have duplicates.
       {text: enteredGoalText, key: Math.random().toString()},
     ]);
+
+    // Manually close the modal via direct call to the handler function
+    endAddGoalHandlerViaModal();
+
     console.log("Goals Added: " + enteredGoalText);
   }
 
@@ -27,7 +40,14 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <GoalInput onAddGoal={addGoalHandler} />
+      <Button 
+        title="Add New Goal"
+        color="5e0acc"
+        onPress={startAddGoalHandlerViaModal} />
+      <GoalInput 
+        visible={modalIsVisible} 
+        onAddGoal={addGoalHandler}
+        onCancel={endAddGoalHandlerViaModal} />
       <View style={styles.goalsContainer}>
         
         {/* A flatlist is a list that only renders the items that are currently visible on the 

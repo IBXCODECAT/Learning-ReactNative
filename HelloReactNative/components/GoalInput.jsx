@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { Button, Modal, StyleSheet, TextInput, View } from 'react-native';
 
 function GoalInput(props) {
     
@@ -15,15 +15,24 @@ function GoalInput(props) {
     }
 
     return (
-        <View style={styles.inputContainer}>
-            <TextInput 
-                onChangeText={goalInputHandler}
-                placeholder='your goal' 
-                style={styles.textInput}
-                value={enteredGoalText}
-                />
-            <Button onPress={addGoalHandler} title='Add Goal' />
-        </View>
+        <Modal visible={props.visible} animationType='slide'>
+            <View style={styles.inputContainer}>
+                <TextInput 
+                    onChangeText={goalInputHandler}
+                    placeholder='your goal' 
+                    style={styles.textInput}
+                    value={enteredGoalText}
+                    />
+                <View style={styles.modalButtonContainer}>
+                    <View style={styles.buttonContainerView}>
+                        <Button title="Add Goal" onPress={addGoalHandler} />
+                    </View>
+                    <View style={styles.buttonContainerView}>
+                        <Button title='Cancel' onPress={props.onCancel} />
+                    </View>
+                </View>
+            </View>
+        </Modal>
     );
 }
 
@@ -32,18 +41,25 @@ export default GoalInput;
 const styles = StyleSheet.create({
     inputContainer: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 24,
+        padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: '#cccccc',
     },
         textInput: {
         borderWidth: 1,
         borderColor: '#cccccc',
-        width: '70%',
-        marginRight: 8,
+        width: '100%',
         padding: 8,
     },
+    modalButtonContainer: {
+        marginTop: 16,
+        flexDirection: 'row',
+    },
+    buttonContainerView: {
+        width: 100,
+        marginHorizontal: 16,
+    }
 });
