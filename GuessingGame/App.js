@@ -7,21 +7,35 @@ import GameScreen from './screens/GameScreen';
 import StartGameScreen from './screens/StartGameScreen';
 
 import Colors from './Constants/Colors';
+import GameOverScreen from './screens/GameOverScreen';
 
 export default function App() {
 
   const [userNumber, setUserNumber] = useState();
 
+  // Game starts over because the game technically has not started yet
+  const [isGameOver, setIsGameOver] = useState(true);
+
   function startGameHandler(selectedNumber) {
     setUserNumber(selectedNumber);
+    setIsGameOver(false);
+  }
+  
+  function gameOverHandler() {
+    setIsGameOver(true);
   }
 
   // If no user number is selected, show the start game screen
   // Otherwise, show the game screen with the selected number
-  let screen = <StartGameScreen onStartGame={startGameHandler} />;
+  let screenToRender = <StartGameScreen onStartGame={startGameHandler} />;
   if (userNumber) {
-    screen = <GameScreen userChoice={userNumber} />;
+    screenToRender = <GameScreen userChoice={userNumber} onGameOver={gameOverHandler} />;
   }
+
+  if(isGameOver && userNumber) {
+    screenToRender = <GameOverScreen/>;
+  }
+
 
   return (
     <LinearGradient colors={[Colors.primary700, Colors.accent500]} style={styles.rootScreen}>
@@ -30,7 +44,7 @@ export default function App() {
         resizeMode='cover' 
         style={styles.rootScreen} 
         imageStyle={styles.backgroundImage}>
-        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
+        <SafeAreaView style={styles.rootScreen}>{screenToRender}</SafeAreaView>
       </ImageBackground>
       <StatusBar style="light"></StatusBar>
     </LinearGradient>
