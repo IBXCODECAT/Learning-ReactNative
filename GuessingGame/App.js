@@ -16,6 +16,8 @@ export default function App() {
   // Game starts over because the game technically has not started yet
   const [isGameOver, setIsGameOver] = useState(true);
 
+  const [guessRounds, setGuessRounds] = useState(0);
+
   function startGameHandler(selectedNumber) {
     setUserNumber(selectedNumber);
     setIsGameOver(false);
@@ -23,6 +25,12 @@ export default function App() {
   
   function gameOverHandler() {
     setIsGameOver(true);
+  }
+
+  function startNewGameHandler() {
+    setGuessRounds(0);
+    setUserNumber(null);
+    //setIsGameOver(true);
   }
 
   // If no user number is selected, show the start game screen
@@ -33,7 +41,11 @@ export default function App() {
   }
 
   if(isGameOver && userNumber) {
-    screenToRender = <GameOverScreen/>;
+    screenToRender = <GameOverScreen
+      userNumber={userNumber}
+      roundsNumber={guessRounds}
+      onStartNewGame={startNewGameHandler}
+    />;
   }
 
 

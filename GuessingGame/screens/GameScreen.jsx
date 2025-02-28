@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -23,7 +23,7 @@ function generateRandomNumber(min, max, exclude) {
     }
 }
 
-let minBounds = 0;
+let minBounds = 1;
 let maxBounds = 100;
 
 function GameScreen({userChoice, onGameOver}) {
@@ -32,12 +32,20 @@ function GameScreen({userChoice, onGameOver}) {
 
     const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
+    const [guessRounds, setGuessRounds] = useState([initialGuess]);
+
     useEffect(() => {
         if(currentGuess === userChoice) {
             Alert.alert('You won!', 'The phone guessed your number!', [{text: 'OK', style: 'cancel'}]);
             onGameOver();
         }
     }, [currentGuess, userChoice, onGameOver]);
+
+    // Set the min and max bounds when the component is first rendered
+    useEffect(() => {
+        minBounds = 1;
+        maxBounds = 100;
+    }, []);
 
     function nextGuessHandler(isGreater /*boolean*/) {
         
@@ -58,6 +66,8 @@ function GameScreen({userChoice, onGameOver}) {
         // Generate a new random number between the min and max bounds
         const newGuess = generateRandomNumber(minBounds, maxBounds, currentGuess);
         setCurrentGuess(newGuess);
+
+        setGuessRounds(prevGuessRounds => [newGuess, ...prevGuessRounds]);
     }
 
     return (
@@ -79,6 +89,16 @@ function GameScreen({userChoice, onGameOver}) {
                     </View>
                 </View>
             </Card>
+            <View>
+                {/* guess round can be used as key since it is garanteed to occur once */}
+                {guessRounds.map(guessRound => <Text key={guessRound}>{guessRound}</Text>)}
+
+                <FlatList>
+                    data={guessRounds}
+                    renderItem={itemData => <Text>{itemData.item}</Text>}
+                    keyExtractor={item => item.toString()}  
+                </FlatList>
+            </View>
         </View>
     )
  }
