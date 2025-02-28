@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Alert, StyleSheet, TextInput, View } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 
-function StartGameScreen() { 
+function StartGameScreen({onStartGame}) { 
 
     const [enteredNumber, setEnteredNumber] = useState('');
 
@@ -23,8 +23,12 @@ function StartGameScreen() {
                 'Please enter a valid integer between 1 and 99',
                 [{text: 'I Understand', style: 'destructive', onPress: resetInputHandler}]
             );
+
+            // Start the game with the chosen number
             return;
         }
+        
+        onStartGame(chosenNumber);
     }
 
     return (
