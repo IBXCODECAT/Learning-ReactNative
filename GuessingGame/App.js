@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient'
-import { ImageBackground, StyleSheet } from 'react-native';
+import { ImageBackground, SafeAreaView, StyleSheet } from 'react-native';
 
 import GameScreen from './screens/GameScreen';
 import StartGameScreen from './screens/StartGameScreen';
@@ -28,10 +28,9 @@ export default function App() {
         resizeMode='cover' 
         style={styles.rootScreen} 
         imageStyle={styles.backgroundImage}>
-        
-        {screen /* Render the screen based on the user number */}
+        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
       </ImageBackground>
-      <StatusBar style="auto"></StatusBar>
+      <StatusBar style="light"></StatusBar>
     </LinearGradient>
   );
 }
