@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { Ionicons } from "@expo/vector-icons";
 
+import GuessLogItem from "../components/game/GuessLogItem";
 import NumberContainer from "../components/game/NumberContainer";
 import Card from "../components/ui/Card";
 import Heading from "../components/ui/Heading";
@@ -36,8 +37,8 @@ function GameScreen({userChoice, onGameOver}) {
 
     useEffect(() => {
         if(currentGuess === userChoice) {
+            onGameOver(guessRounds.length);
             Alert.alert('You won!', 'The phone guessed your number!', [{text: 'OK', style: 'cancel'}]);
-            onGameOver();
         }
     }, [currentGuess, userChoice, onGameOver]);
 
@@ -70,6 +71,8 @@ function GameScreen({userChoice, onGameOver}) {
         setGuessRounds(prevGuessRounds => [newGuess, ...prevGuessRounds]);
     }
 
+    const guessRoundsListlength = guessRounds.length;
+
     return (
         <View style={styles.screen}>
             <Title>Oponent's Guess</Title>
@@ -89,15 +92,18 @@ function GameScreen({userChoice, onGameOver}) {
                     </View>
                 </View>
             </Card>
-            <View>
+            <View style={styles.lstContainer}>
                 {/* guess round can be used as key since it is garanteed to occur once */}
-                {guessRounds.map(guessRound => <Text key={guessRound}>{guessRound}</Text>)}
-
-                <FlatList>
+                <FlatList
                     data={guessRounds}
-                    renderItem={itemData => <Text>{itemData.item}</Text>}
-                    keyExtractor={item => item.toString()}  
-                </FlatList>
+                    renderItem={(itemData) => (
+                        <GuessLogItem
+                            roundNumber={guessRoundsListlength - itemData.index}
+                            guess={itemData.item}
+                        />
+                    )}
+                    keyExtractor={(item) =>  item}  
+                />
             </View>
         </View>
     )
@@ -122,5 +128,10 @@ const styles = StyleSheet.create({
 
     btnContainer: {
         flex: 1,
+    },
+
+    lstContainer: {
+        flex: 1,
+        padding: 16
     }
 });

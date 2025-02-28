@@ -23,13 +23,14 @@ export default function App() {
     setIsGameOver(false);
   }
   
-  function gameOverHandler() {
+  function gameOverHandler({numRounds}) {
     setIsGameOver(true);
+    setGuessRounds(numRounds);
   }
 
   function startNewGameHandler() {
-    setGuessRounds(0);
     setUserNumber(null);
+    setGuessRounds(0);
     //setIsGameOver(true);
   }
 
