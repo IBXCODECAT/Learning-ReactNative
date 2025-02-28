@@ -1,11 +1,14 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 
+import { Ionicons } from "@expo/vector-icons";
+
 import NumberContainer from "../components/game/NumberContainer";
 import Card from "../components/ui/Card";
 import Heading from "../components/ui/Heading";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
+import Colors from "../Constants/Colors";
 
 // Exclude the user's number from the random number generation
 // This is used to prevent the phone from winning the game the first round
@@ -62,10 +65,18 @@ function GameScreen({userChoice, onGameOver}) {
             <Title>Oponent's Guess</Title>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card>
-                <Heading>Higher or Lower?</Heading>
-                <View>
-                    <PrimaryButton onPress={nextGuessHandler.bind(this, false)}>-</PrimaryButton>
-                    <PrimaryButton onPress={nextGuessHandler.bind(this, true)}>+</PrimaryButton>
+                <Heading style={styles.instructionText}>Higher or Lower?</Heading>
+                <View style={styles.btnMultiContainer}>
+                    <View style={styles.btnContainer}>
+                        <PrimaryButton onPress={nextGuessHandler.bind(this, false)}>
+                            <Ionicons name="arrow-down-sharp" size={24} color={Colors.white}/>
+                        </PrimaryButton>
+                    </View>
+                    <View style={styles.btnContainer}>
+                        <PrimaryButton onPress={nextGuessHandler.bind(this, true)}>
+                            <Ionicons name="arrow-up-sharp" size={24} color={Colors.white}/>
+                        </PrimaryButton>
+                    </View>
                 </View>
             </Card>
         </View>
@@ -80,5 +91,16 @@ const styles = StyleSheet.create({
         padding: 24,
         paddingTop: 48,
     },
-    
+
+    instructionText: {
+        marginbottom: 12,
+    },
+
+    btnMultiContainer: {
+        flexDirection: 'row',
+    },
+
+    btnContainer: {
+        flex: 1,
+    }
 });

@@ -1,10 +1,8 @@
 import { StyleSheet, Text } from "react-native";
 import Colors from "../../Constants/Colors";
 
-function Heading({children}) {
-    return (
-        <Text style={styles.heading}>{children}</Text>
-    )
+function Heading({children, style}) {
+    return <Text style={[styles.heading, style]}>{children}</Text>;
 }
 
 export default Heading;
