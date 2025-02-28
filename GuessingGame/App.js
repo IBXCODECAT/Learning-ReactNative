@@ -10,7 +10,7 @@ export default function App() {
         source={require('./assets/images/background.png')} 
         resizeMode='cover' 
         style={styles.rootScreen} 
-        imageStyle={{opacity: 0.15}}>
+        imageStyle={styles.backgroundImage}>
         <StartGameScreen />
       </ImageBackground>
       <StatusBar style="auto"></StatusBar>
@@ -21,5 +21,8 @@ export default function App() {
 const styles = StyleSheet.create({
   rootScreen: {
     flex: 1,
+  },
+  backgroundImage: {
+    opacity: 0.15,
   }
 });
