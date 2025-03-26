@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import Title from "../components/ui/Title";
 import Colors from "../Constants/Colors";
 import PrimaryButton from "../components/ui/PrimaryButton";
+import { DIMEN_TURNARY_THRESHOLD, WINDOW_DIMEN } from "../Constants/Dimensions";
 
 function GameOverScreen({roundsNumber, userNumber, onStartNewGame}) {
     return (
@@ -33,9 +34,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     imageContianer: {
-        width: 300,
-        height: 300,
-        borderRadius: 150,
+        width: WINDOW_DIMEN.width < DIMEN_TURNARY_THRESHOLD ? 150 : 300,
+        height: WINDOW_DIMEN.width < DIMEN_TURNARY_THRESHOLD ? 150 : 300,
+        borderRadius: WINDOW_DIMEN.width < DIMEN_TURNARY_THRESHOLD ? 75 : 150,
         borderWidth: 3,
         borderColor: Colors.primary800,
         overflow: 'hidden',
