@@ -1,4 +1,4 @@
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { useEffect, useState } from "react";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -10,6 +10,7 @@ import Heading from "../components/ui/Heading";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
 import Colors from "../Constants/Colors";
+import { DIMEN_TURNARY_THRESHOLD } from "../Constants/Dimensions";
 
 // Exclude the user's number from the random number generation
 // This is used to prevent the phone from winning the game the first round
@@ -34,6 +35,8 @@ function GameScreen({userChoice, onGameOver}) {
     const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
     const [guessRounds, setGuessRounds] = useState([initialGuess]);
+
+    const {width, height} = useWindowDimensions(); // Get the width of the screen to make responsive UI
 
     useEffect(() => {
         if(currentGuess === userChoice) {
@@ -73,25 +76,49 @@ function GameScreen({userChoice, onGameOver}) {
 
     const guessRoundsListlength = guessRounds.length;
 
-    return (
-        <View style={styles.screen}>
-            <Title>Oponent's Guess</Title>
-            <NumberContainer>{currentGuess}</NumberContainer>
-            <Card>
-                <Heading style={styles.instructionText}>Higher or Lower?</Heading>
-                <View style={styles.btnMultiContainer}>
-                    <View style={styles.btnContainer}>
+    let content = (<>
+        <NumberContainer>{currentGuess}</NumberContainer>
+        <Card>
+            <Heading style={styles.instructionText}>Higher or Lower?</Heading>
+            <View style={styles.btnMultiContainer}>
+                <View style={styles.btnContainer}>
+                    <PrimaryButton onPress={nextGuessHandler.bind(this, false)}>
+                        <Ionicons name="arrow-down-sharp" size={24} color={Colors.white}/>
+                    </PrimaryButton>
+                </View>
+                <View style={styles.btnContainer}>
+                    <PrimaryButton onPress={nextGuessHandler.bind(this, true)}>
+                        <Ionicons name="arrow-up-sharp" size={24} color={Colors.white}/>
+                    </PrimaryButton>
+                </View>
+            </View>
+        </Card>
+    </>);
+
+    if(width > DIMEN_TURNARY_THRESHOLD)
+    {
+        content = (<>
+            {/*<Heading style={styles.instructionText}>Higher or Lower?</Heading>*/}
+            <View style={styles.btnMultiContainerWide}>
+                <View style={styles.btnContainer}>
                         <PrimaryButton onPress={nextGuessHandler.bind(this, false)}>
                             <Ionicons name="arrow-down-sharp" size={24} color={Colors.white}/>
                         </PrimaryButton>
                     </View>
+                    <NumberContainer>{currentGuess}</NumberContainer>
                     <View style={styles.btnContainer}>
                         <PrimaryButton onPress={nextGuessHandler.bind(this, true)}>
                             <Ionicons name="arrow-up-sharp" size={24} color={Colors.white}/>
                         </PrimaryButton>
-                    </View>
                 </View>
-            </Card>
+            </View>
+            
+        </>)
+    }
+    return (
+        <View style={styles.screen}>
+            <Title>Oponent's Guess</Title>
+            {content}
             <View style={styles.lstContainer}>
                 {/* guess round can be used as key since it is garanteed to occur once */}
                 <FlatList
@@ -129,6 +156,11 @@ const styles = StyleSheet.create({
 
     btnContainer: {
         flex: 1,
+    },
+
+    btnMultiContainerWide: {
+        flexDirection: 'row',
+        alignItems: 'center', // vertically center the items in the row
     },
 
     lstContainer: {
