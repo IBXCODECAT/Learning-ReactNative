@@ -1,14 +1,22 @@
+import { FlatList } from 'react-native';
 import { CATEGORIES } from "../../Data/Dummy";
+import CategoryGridTile from '../CategoryGridTile';
 
-function CategoriesScreen({ navigation }) {
+function renderCategoryItem(itemData) {
+    return (
+        <CategoryGridTile
+            title={itemData.item.title}
+            color={itemData.item.color}/>
+    )
+}
+
+function CategoriesScreen() {
   return (
-    <SafeAreaView>
-      <Text>Categories Screen</Text>
-      <Button
-        title="Go to Products"
-        onPress={() => navigation.navigate('Products')}
-      />
-    </SafeAreaView>
+    <FlatList 
+        data={CATEGORIES}
+        keyExtractor={(item) => item.id}
+        renderItem={renderCategoryItem}
+    />
   );
 }
 
