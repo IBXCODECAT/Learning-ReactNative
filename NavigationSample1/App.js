@@ -5,7 +5,7 @@ import CategoriesScreen from './Components/Screens/CategoriesScreen';
 export default function App() {
   return (
     <View>
-
+      <StatusBar style="light"/>
       <CategoriesScreen/>
     </View>
   );

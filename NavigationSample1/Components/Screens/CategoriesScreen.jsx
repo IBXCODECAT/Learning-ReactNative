@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import { CATEGORIES } from "../../Data/Dummy";
 import CategoryGridTile from '../CategoryGridTile';
 
@@ -16,8 +16,10 @@ function CategoriesScreen() {
         data={CATEGORIES}
         keyExtractor={(item) => item.id}
         renderItem={renderCategoryItem}
+        numColumns={2} // This will create a grid layout with 2 columns
     />
   );
 }
 
 export default CategoriesScreen;
+
