@@ -1,3 +1,5 @@
+// Android-specific implementation of the Title component for React Native.
+
 import { StyleSheet, Text } from "react-native";
 import Colors from "../../Constants/Colors";
 
@@ -15,9 +17,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: Colors.white,
         textAlign: 'center',
-        borderWidth: 2,
-        borderColor: Colors.white,
         padding: 12,
+        borderWidth: 2,
+        borderColor: Colors.white, // Ensure the border is visible on Android
         maxWidth: '80%',
         width: 300,
     }

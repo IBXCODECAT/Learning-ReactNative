@@ -1,3 +1,5 @@
+// iOS-specific color constants for a React Native application.
+
 const Colors = {
     primary500: '#72063c',
     primary600: '#640233',
