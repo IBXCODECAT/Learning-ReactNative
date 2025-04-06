@@ -2,15 +2,23 @@ import { FlatList, StyleSheet } from 'react-native';
 import { CATEGORIES } from "../../Data/Dummy";
 import CategoryGridTile from '../CategoryGridTile';
 
-function renderCategoryItem(itemData) {
-    return (
-        <CategoryGridTile
-            title={itemData.item.title}
-            color={itemData.item.color}/>
-    )
-}
 
-function CategoriesScreen() {
+
+// Navigation prop provided by the stack navigator will be available in the screen component
+function CategoriesScreen({navigation}) {
+  function renderCategoryItem(itemData) {
+    function pressedHandler() {
+      navigation.navigate('MealsOverview');
+    }
+  
+    return (
+          <CategoryGridTile
+              title={itemData.item.title}
+              color={itemData.item.color}
+              onPressed={pressedHandler}/>
+      )
+  }
+
   return (
     <FlatList 
         data={CATEGORIES}
