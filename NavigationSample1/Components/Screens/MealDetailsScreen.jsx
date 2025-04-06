@@ -6,6 +6,7 @@ import List from "../MealDetail/List";
 import { useLayoutEffect } from "react";
 import IconButton from "../IconButton";
 
+
 function MealDetailsScreen({route, navigation}) {
     const mealId = route.params.mealId;
     const selectedMeal = MEALS.find((meal) => meal.id === mealId); // Find the meal by id from the dummy data

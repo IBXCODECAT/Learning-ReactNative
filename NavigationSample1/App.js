@@ -4,10 +4,36 @@ import CategoriesScreen from './Components/Screens/CategoriesScreen';
 import MealDetailsScreen from './Components/Screens/MealDetailsScreen';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MealsOverviewScreen from './Components/Screens/MealsOverviewScreen';
 
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import FavoritesScreen from './Components/Screens/FavoritesScreen';
+
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+    return <Drawer.Navigator
+      screenOptions={{
+      headerStyle: { backgroundColor: '#351401' }, // Header background color for the drawer navigator
+      headerTintColor: 'white', // Header text color
+      sceneStyle: {
+        backgroundColor: '#3f2f25', // Background color for the drawer's scenes
+      }
+    }}>
+      <Drawer.Screen 
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          title: "Meal Categories", // Title for the drawer item
+        }}/>
+
+      <Drawer.Screen
+        name="Favorites"
+        component={FavoritesScreen}/>
+    </Drawer.Navigator>;
+}
 
 export default function App() {
   return (
@@ -25,10 +51,10 @@ export default function App() {
           }}
         >
           <Stack.Screen 
-            name="MealsCategories"
-            component={CategoriesScreen}
+            name="Drawer"
+            component={DrawerNavigator}
             options={{
-              title: "Meal Categories", // Title for the header
+              headerShown: false
             }}/>
           <Stack.Screen 
             name="MealsOverview"
