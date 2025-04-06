@@ -8,7 +8,9 @@ import CategoryGridTile from '../CategoryGridTile';
 function CategoriesScreen({navigation}) {
   function renderCategoryItem(itemData) {
     function pressedHandler() {
-      navigation.navigate('MealsOverview');
+      navigation.navigate('MealsOverview', {
+        categoryId: itemData.item.id,
+      });
     }
   
     return (
