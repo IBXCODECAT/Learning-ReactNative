@@ -25,12 +25,14 @@ function MealsOverviewScreen({route, navigation}) {
 
     function renderMealItem(itemData) {
 
+        const item = itemData.item; // Get the actual meal item from the FlatList
         const mealItemProps = {
-            title: itemData.item.title, 
-            imageUrl: itemData.item.imageUrl, // imageUrl is a string in the dummy data
-            affordability: itemData.item.affordability, // affordability is a string in the dummy data
-            duration: itemData.item.duration, // duration is a number in the dummy data
-            complexity: itemData.item.complexity // complexity is a string in the dummy data
+            id: item.id, // id is a string in the dummy data
+            title: item.title, 
+            imageUrl: item.imageUrl, // imageUrl is a string in the dummy data
+            affordability: item.affordability, // affordability is a string in the dummy data
+            duration: item.duration, // duration is a number in the dummy data
+            complexity: item.complexity // complexity is a string in the dummy data
         }
 
         // Distribute Props

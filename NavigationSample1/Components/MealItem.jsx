@@ -1,11 +1,22 @@
+import { useNavigation } from "@react-navigation/native";
 import { Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 
-function MealItem({title, imageUrl, duration, complexity, affordability}) {
+function MealItem({id, title, imageUrl, duration, complexity, affordability}) {
+    
+    const navigation = useNavigation();
+    
+    function selectMealItemHandler() {
+        navigation.navigate('MealDetails', {
+            mealId: id,
+        });
+    }
+
     return (
         <View style={styles.mealItem}>
             <Pressable
                 android_ripple={{color: "#ccc" }} // Android ripple effect
                 style={({pressed}) => pressed ? styles.btnPressed : null} // For iOS feedback
+                onPress={selectMealItemHandler} /* When the meal item is pressed, navigate to MealDetails */
             >
                 <View style={styles.innerContainer}>
                     <View>
